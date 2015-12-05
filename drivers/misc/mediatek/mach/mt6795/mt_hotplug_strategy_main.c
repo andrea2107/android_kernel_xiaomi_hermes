@@ -489,7 +489,7 @@ suspend_end:
 /*
  * resume callback
  */
-static int hps_resume(struct device *dev)
+static int __cpuinit hps_resume(struct device *dev)
 {
     hps_warn("%s\n", __func__);
 
