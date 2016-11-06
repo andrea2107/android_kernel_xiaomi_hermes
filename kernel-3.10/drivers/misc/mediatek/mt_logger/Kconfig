@@ -1,5 +1,0 @@
-config MTK_MT_LOGGER
-  bool CONFIG_MTK_MT_LOGGER
-  default n
-  help
-    CONFIG_MTK_MT_LOGGER
