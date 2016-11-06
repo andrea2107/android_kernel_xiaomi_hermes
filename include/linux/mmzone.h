@@ -160,7 +160,8 @@ enum zone_stat_item {
 #ifdef CONFIG_UKSM
 	NR_UKSM_ZERO_PAGES,
 #endif
-	NR_VM_ZONE_STAT_ITEMS };
+	NR_VM_ZONE_STAT_ITEMS 
+};
 
 /*
  * We do arithmetic on the LRU lists in various places in the code,
