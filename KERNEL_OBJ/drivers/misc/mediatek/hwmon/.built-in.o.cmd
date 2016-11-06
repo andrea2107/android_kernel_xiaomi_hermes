@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/hwmon/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/hwmon/built-in.o drivers/misc/mediatek/hwmon/hwmsen/built-in.o drivers/misc/mediatek/hwmon/batchsen/built-in.o drivers/misc/mediatek/hwmon/sensor_dts/built-in.o 

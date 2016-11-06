@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/smi/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/smi/built-in.o drivers/misc/mediatek/smi/mmdvfs_mgr.o drivers/misc/mediatek/smi/smi_common_v2.o drivers/misc/mediatek/smi/smi_info_util.o 

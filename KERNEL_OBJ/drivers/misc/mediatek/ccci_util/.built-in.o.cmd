@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/ccci_util/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/ccci_util/built-in.o drivers/misc/mediatek/ccci_util/ccci_util_lib.o drivers/misc/mediatek/ccci_util/mt6795/built-in.o drivers/misc/mediatek/ccci_util/ccci_util_dummy.o 

@@ -1,1 +1,0 @@
-cmd_arch/arm64/kernel/vdso/vdso-offsets.h := 	/home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-nm arch/arm64/kernel/vdso/vdso.so.dbg | /home/android_kernel_xiaomi_hermes/arch/arm64/kernel/vdso/gen_vdso_offsets.sh | LC_ALL=C sort > arch/arm64/kernel/vdso/vdso-offsets.h && cp arch/arm64/kernel/vdso/vdso-offsets.h include/generated/

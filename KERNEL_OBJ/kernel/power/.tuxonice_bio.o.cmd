@@ -1,1 +1,0 @@
-cmd_kernel/power/tuxonice_bio.o := /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o kernel/power/tuxonice_bio.o kernel/power/tuxonice_bio_core.o kernel/power/tuxonice_bio_chains.o kernel/power/tuxonice_bio_signature.o 

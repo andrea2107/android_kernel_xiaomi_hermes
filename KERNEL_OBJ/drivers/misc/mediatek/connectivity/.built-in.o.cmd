@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/connectivity/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/connectivity/built-in.o drivers/misc/mediatek/connectivity/combo/built-in.o drivers/misc/mediatek/connectivity/common_detect/built-in.o 

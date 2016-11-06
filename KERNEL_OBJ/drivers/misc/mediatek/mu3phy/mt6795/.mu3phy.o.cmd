@@ -1,1 +1,0 @@
-cmd_drivers/misc/mediatek/mu3phy/mt6795/mu3phy.o := /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mu3phy/mt6795/mu3phy.o drivers/misc/mediatek/mu3phy/mt6795/mtk-phy.o drivers/misc/mediatek/mu3phy/mt6795/mtk-phy-ahb.o drivers/misc/mediatek/mu3phy/mt6795/mtk-phy-asic.o 
