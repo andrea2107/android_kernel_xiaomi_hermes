@@ -1,5 +1,0 @@
-config MTK_LENS
-  bool CONFIG_MTK_LENS
-  default n
-  help
-    CONFIG_MTK_LENS

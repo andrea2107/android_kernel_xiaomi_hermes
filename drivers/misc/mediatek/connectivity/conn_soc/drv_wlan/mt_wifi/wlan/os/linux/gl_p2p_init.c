@@ -179,6 +179,7 @@ void p2pHandleSystemSuspend(void)
 	if (!((ip6[0] == 0) && (ip6[1] == 0) && (ip6[2] == 0) && (ip6[3] == 0) && (ip6[4] == 0) && (ip6[5] == 0)))
 		; /* Do nothing */
 #endif
+<<<<<<< HEAD
 	/* <7> set up the ARP filter */
 	{
 		WLAN_STATUS rStatus = WLAN_STATUS_FAILURE;
@@ -196,6 +197,27 @@ void p2pHandleSystemSuspend(void)
 		for (i = 0; i < u4NumIPv4; i++) {
 			prParamNetAddr->u2AddressLength = sizeof(PARAM_NETWORK_ADDRESS_IP);	/* 4;; */
 			prParamNetAddr->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;
+=======
+    // <7> set up the ARP filter
+    {
+        WLAN_STATUS rStatus = WLAN_STATUS_FAILURE;
+        UINT_32 u4SetInfoLen = 0;
+//        UINT_8 aucBuf[32] = {0};
+        UINT_32 u4Len = OFFSET_OF(PARAM_NETWORK_ADDRESS_LIST, arAddress);
+        P_PARAM_NETWORK_ADDRESS_LIST prParamNetAddrList = (P_PARAM_NETWORK_ADDRESS_LIST)g_aucBufIpAddr;//aucBuf;
+        P_PARAM_NETWORK_ADDRESS prParamNetAddr = prParamNetAddrList->arAddress;
+
+        kalMemZero(g_aucBufIpAddr, sizeof(g_aucBufIpAddr));
+
+	prParamNetAddrList->u4AddressCount = u4NumIPv4;
+#ifdef  CONFIG_IPV6
+        prParamNetAddrList->u4AddressCount += u4NumIPv6;
+#endif
+        prParamNetAddrList->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;
+        for (i = 0; i < u4NumIPv4; i++) {
+            prParamNetAddr->u2AddressLength = sizeof(PARAM_NETWORK_ADDRESS_IP);//4;;
+            prParamNetAddr->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;;
+>>>>>>> 7eb92eb... fix invalid ipv6 reference on disabled ipv6
 #if 0
 			kalMemCopy(prParamNetAddr->aucAddress, ip, sizeof(ip));
 			prParamNetAddr = (P_PARAM_NETWORK_ADDRESS) ((UINT_32) prParamNetAddr + sizeof(ip));

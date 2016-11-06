@@ -193,7 +193,11 @@ int ubi_start_leb_change(struct ubi_device *ubi, struct ubi_volume *vol,
 	vol->changing_leb = 1;
 	vol->ch_lnum = req->lnum;
 
+<<<<<<< HEAD
 	vol->upd_buf = vmalloc(req->bytes);
+=======
+	vol->upd_buf = kmalloc(ALIGN((int)req->bytes, ubi->min_io_size), GFP_KERNEL);
+>>>>>>> e98e392... Linux 3.10.100 (accumulative patch)
 	if (!vol->upd_buf)
 		return -ENOMEM;
 

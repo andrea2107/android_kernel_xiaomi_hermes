@@ -2506,6 +2506,7 @@ void wlanHandleSystemSuspend(void)
 		goto notify_suspend;
 	}
 
+<<<<<<< HEAD
 	/* <4> copy the IPv4 address */
 	kalMemCopy(ip, &(((struct in_device *)(prDev->ip_ptr))->ifa_list->ifa_local), sizeof(ip));
 	DBGLOG(INIT, INFO, "ip is %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
@@ -2552,6 +2553,81 @@ void wlanHandleSystemSuspend(void)
 		for (i = 0; i < u4NumIPv4; i++) {
 			prParamNetAddr->u2AddressLength = sizeof(PARAM_NETWORK_ADDRESS_IP);	/* 4;; */
 			prParamNetAddr->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;
+=======
+    // <2> get the IPv4 address
+    if(!prDev || !(prDev->ip_ptr)||\
+        !((struct in_device *)(prDev->ip_ptr))->ifa_list||\
+        !(&(((struct in_device *)(prDev->ip_ptr))->ifa_list->ifa_local))){
+        DBGLOG(INIT, INFO, ("ip is not avaliable.\n"));
+        return;
+    }
+
+    // <3> acquire the prGlueInfo
+    prGlueInfo = *((P_GLUE_INFO_T *) netdev_priv(prDev));
+    ASSERT(prGlueInfo);
+
+    // <4> copy the IPv4 address
+    kalMemCopy(ip, &(((struct in_device *)(prDev->ip_ptr))->ifa_list->ifa_local), sizeof(ip));
+    DBGLOG(INIT, INFO, ("ip is %d.%d.%d.%d\n",
+            ip[0],ip[1],ip[2],ip[3]));
+
+    // todo: traverse between list to find whole sets of IPv4 addresses
+    if (!((ip[0] == 0) &&
+         (ip[1] == 0) &&
+         (ip[2] == 0) &&
+         (ip[3] == 0))) {
+        u4NumIPv4++;
+    }
+
+#ifdef  CONFIG_IPV6
+    // <5> get the IPv6 address
+    if(!prDev || !(prDev->ip6_ptr)||\
+        !((struct in_device *)(prDev->ip6_ptr))->ifa_list||\
+        !(&(((struct in_device *)(prDev->ip6_ptr))->ifa_list->ifa_local))){
+        DBGLOG(INIT, INFO, ("ipv6 is not avaliable.\n"));
+        return;
+    }
+    // <6> copy the IPv6 address
+    kalMemCopy(ip6, &(((struct in_device *)(prDev->ip6_ptr))->ifa_list->ifa_local), sizeof(ip6));
+    DBGLOG(INIT, INFO, ("ipv6 is %d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d.%d\n",
+            ip6[0],ip6[1],ip6[2],ip6[3],
+            ip6[4],ip6[5],ip6[6],ip6[7],
+            ip6[8],ip6[9],ip6[10],ip6[11],
+            ip6[12],ip6[13],ip6[14],ip6[15]
+            ));
+
+    // todo: traverse between list to find whole sets of IPv6 addresses
+    if (!((ip6[0] == 0) &&
+         (ip6[1] == 0) &&
+         (ip6[2] == 0) &&
+         (ip6[3] == 0) &&
+         (ip6[4] == 0) &&
+         (ip6[5] == 0))) {
+        //u4NumIPv6++;
+    }
+
+#endif
+
+    // <7> set up the ARP filter
+    {
+        WLAN_STATUS rStatus = WLAN_STATUS_FAILURE;
+        UINT_32 u4SetInfoLen = 0;
+//        UINT_8 aucBuf[32] = {0};
+        UINT_32 u4Len = OFFSET_OF(PARAM_NETWORK_ADDRESS_LIST, arAddress);
+        P_PARAM_NETWORK_ADDRESS_LIST prParamNetAddrList = (P_PARAM_NETWORK_ADDRESS_LIST)g_aucBufIpAddr;//aucBuf;
+        P_PARAM_NETWORK_ADDRESS prParamNetAddr = prParamNetAddrList->arAddress;
+
+        kalMemZero(g_aucBufIpAddr, sizeof(g_aucBufIpAddr));
+
+	prParamNetAddrList->u4AddressCount = u4NumIPv4;
+#ifdef  CONFIG_IPV6
+        prParamNetAddrList->u4AddressCount += u4NumIPv6;
+#endif
+        prParamNetAddrList->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;
+        for (i = 0; i < u4NumIPv4; i++) {
+            prParamNetAddr->u2AddressLength = sizeof(PARAM_NETWORK_ADDRESS_IP);//4;;
+            prParamNetAddr->u2AddressType = PARAM_PROTOCOL_ID_TCP_IP;;
+>>>>>>> 7eb92eb... fix invalid ipv6 reference on disabled ipv6
 #if 0
 			kalMemCopy(prParamNetAddr->aucAddress, ip, sizeof(ip));
 			prParamNetAddr = (P_PARAM_NETWORK_ADDRESS) ((UINT_32) prParamNetAddr + sizeof(ip));

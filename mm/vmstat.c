@@ -745,6 +745,10 @@ const char * const vmstat_text[] = {
 #endif
 	"nr_anon_transparent_hugepages",
 	"nr_free_cma",
+#endif
+#ifdef CONFIG_UKSM
+	"nr_uksm_zero_pages",
+#endif
 	"nr_dirty_threshold",
 	"nr_dirty_background_threshold",
 
@@ -828,7 +832,7 @@ const char * const vmstat_text[] = {
 
 #endif /* CONFIG_VM_EVENTS_COUNTERS */
 };
-#endif /* CONFIG_PROC_FS || CONFIG_SYSFS || CONFIG_NUMA */
+// #endif /* CONFIG_PROC_FS || CONFIG_SYSFS || CONFIG_NUMA */
 
 
 #ifdef CONFIG_PROC_FS
@@ -1186,7 +1190,7 @@ int sysctl_stat_interval __read_mostly = HZ;
 static void vmstat_update(struct work_struct *w)
 {
 	refresh_cpu_vm_stats(smp_processor_id());
-	schedule_delayed_work(&__get_cpu_var(vmstat_work),
+	schedule_delayed_work(this_cpu_ptr(&vmstat_work),
 		round_jiffies_relative(sysctl_stat_interval));
 }
 

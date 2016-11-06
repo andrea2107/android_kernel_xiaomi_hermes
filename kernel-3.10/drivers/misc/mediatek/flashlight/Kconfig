@@ -1,5 +1,0 @@
-config MTK_FLASHLIGHT
-  bool CONFIG_MTK_FLASHLIGHT
-  default n
-  help
-    CONFIG_MTK_FLASHLIGHT

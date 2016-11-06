@@ -1,6 +1,0 @@
-config MTK_SWITCH_TX_POWER
-    bool "ENABLE TX POWER SWITCH"
-    default n
-    ---help---
-      MediaTek SWTP driver
-

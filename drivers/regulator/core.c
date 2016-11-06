@@ -769,7 +769,7 @@ static int suspend_prepare(struct regulator_dev *rdev, suspend_state_t state)
 static void print_constraints(struct regulator_dev *rdev)
 {
 	struct regulation_constraints *constraints = rdev->constraints;
-	char buf[80] = "";
+	char buf[160] = "";
 	int count = 0;
 	int ret;
 
@@ -1893,8 +1893,9 @@ int regulator_disable_deferred(struct regulator *regulator, int ms)
 	rdev->deferred_disables++;
 	mutex_unlock(&rdev->mutex);
 
-	ret = schedule_delayed_work(&rdev->disable_work,
-				    msecs_to_jiffies(ms));
+	ret = queue_delayed_work(system_power_efficient_wq,
+				 &rdev->disable_work,
+				 msecs_to_jiffies(ms));
 	if (ret < 0)
 		return ret;
 	else

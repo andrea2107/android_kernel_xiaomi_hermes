@@ -1,5 +1,0 @@
-config MTK_DBG_DUMP
-  bool CONFIG_MTK_DBG_DUMP
-  default n
-  help
-    CONFIG_MTK_DBG_DUMP
