@@ -1634,12 +1634,8 @@ static int unix_dgram_sendmsg(struct kiocb *kiocb, struct socket *sock,
 	struct scm_cookie tmp_scm;
 	int max_level;
 	int data_len = 0;
-<<<<<<< HEAD
-
-=======
 	int sk_locked;
 	 
->>>>>>> dca3580... Linux 3.10.95 (accumulative patch)
 	if (NULL == siocb->scm)
 		siocb->scm = &tmp_scm;
 	wait_for_unix_gc();
