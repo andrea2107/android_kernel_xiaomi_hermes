@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/imgsensor/src/mt6795/ov5670_mipi_raw/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/imgsensor/src/mt6795/ov5670_mipi_raw/built-in.o drivers/misc/mediatek/imgsensor/src/mt6795/ov5670_mipi_raw/ov5670mipi_Sensor.o 

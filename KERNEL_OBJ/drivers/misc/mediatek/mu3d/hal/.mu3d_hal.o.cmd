@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mu3d/hal/mu3d_hal.o := /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mu3d/hal/mu3d_hal.o drivers/misc/mediatek/mu3d/hal/mu3d_hal_osal.o drivers/misc/mediatek/mu3d/hal/mu3d_hal_qmu_drv.o drivers/misc/mediatek/mu3d/hal/mu3d_hal_usb_drv.o drivers/misc/mediatek/mu3d/hal/mu3d_hal_phy.o 

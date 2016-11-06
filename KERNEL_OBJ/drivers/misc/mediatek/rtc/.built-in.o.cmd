@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/rtc/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/rtc/built-in.o drivers/misc/mediatek/rtc/mtk_rtc_common.o drivers/misc/mediatek/rtc/mtk_rtc_hal_common.o drivers/misc/mediatek/rtc/mt6331/built-in.o 

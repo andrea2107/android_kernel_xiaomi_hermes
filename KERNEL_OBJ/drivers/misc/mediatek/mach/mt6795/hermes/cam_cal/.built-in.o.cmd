@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6795/hermes/cam_cal/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mach/mt6795/hermes/cam_cal/built-in.o drivers/misc/mediatek/mach/mt6795/hermes/cam_cal/s5k3m2_otp/built-in.o 

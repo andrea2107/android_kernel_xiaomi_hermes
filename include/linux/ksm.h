@@ -65,7 +65,7 @@ int rmap_walk_ksm(struct page *page, int (*rmap_one)(struct page *,
 		  struct vm_area_struct *, unsigned long, void *), void *arg);
 void ksm_migrate_page(struct page *newpage, struct page *oldpage);
 
-<<<<<<< HEAD
+
 /*add for charing detect*/
 typedef enum {
 	KAL_FALSE = 0,
@@ -73,7 +73,6 @@ typedef enum {
 } kal_bool;
 
 kal_bool bat_is_charger_exist(void);
-=======
 #ifdef CONFIG_KSM_LEGACY
 int __ksm_enter(struct mm_struct *mm);
 void __ksm_exit(struct mm_struct *mm);
@@ -100,7 +99,6 @@ static inline void ksm_exit(struct mm_struct *mm)
 {
 }
 #endif /* !CONFIG_UKSM */
->>>>>>> 4ceb20b... add uksm 0.1.2.3 for v3.10 .ge.46.patch
 
 #else  /* !CONFIG_KSM */
 

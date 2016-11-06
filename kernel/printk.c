@@ -2246,23 +2246,12 @@ void console_unlock(void)
 	static u64 seen_seq;
 	unsigned long flags;
 	bool wake_klogd = false;
-<<<<<<< HEAD
-	bool retry;
-#if defined(CONFIG_MT_ENG_BUILD) && defined(CONFIG_LOG_TOO_MUCH_WARNING)
-	unsigned long long t1 = 0;
-	char aee_str[512];
-	int org_loglevel = console_loglevel;
-	static u64 time_count;
-	static int line_count, size_count;
-	int ret = 0;
-=======
 	bool do_cond_resched, retry;
 #ifdef LOG_TOO_MUCH_WARNING
     unsigned long total_log_size = 0;
     unsigned long long t1 = 0, t2 = 0;
     char aee_str[512];
     int org_loglevel = console_loglevel;
->>>>>>> 0c3a763... 3.10.102-> 3.10.103
 #endif
 	if (console_suspended) {
 		up(&console_sem);

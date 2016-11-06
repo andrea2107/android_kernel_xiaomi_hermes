@@ -1,0 +1,1 @@
+cmd_drivers/input/touchscreen/mediatek/ft5206/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/input/touchscreen/mediatek/ft5206/built-in.o drivers/input/touchscreen/mediatek/ft5206/focaltech_driver.o drivers/input/touchscreen/mediatek/ft5206/focaltech_ex_fun.o 

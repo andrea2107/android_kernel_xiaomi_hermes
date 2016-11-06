@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/eccci/mt6795/ccci.o := /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/eccci/mt6795/ccci.o drivers/misc/mediatek/eccci/mt6795/ccci_platform.o drivers/misc/mediatek/eccci/mt6795/cldma_platform.o 

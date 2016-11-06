@@ -1,0 +1,1 @@
+cmd_arch/arm64/crypto/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o arch/arm64/crypto/built-in.o arch/arm64/crypto/sha2-ce.o arch/arm64/crypto/aes-ce-cipher.o arch/arm64/crypto/aes-ce-blk.o 

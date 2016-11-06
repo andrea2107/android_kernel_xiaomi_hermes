@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mach/mt6795/hermes/sound/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mach/mt6795/hermes/sound/built-in.o drivers/misc/mediatek/mach/mt6795/hermes/sound/yusu_android_speaker.o 

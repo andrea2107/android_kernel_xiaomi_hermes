@@ -1,0 +1,1 @@
+cmd_drivers/misc/mediatek/mu3d/built-in.o :=  /home/aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android-ld -EL    -r -o drivers/misc/mediatek/mu3d/built-in.o drivers/misc/mediatek/mu3d/drv/built-in.o drivers/misc/mediatek/mu3d/hal/built-in.o 
