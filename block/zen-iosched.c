@@ -3,7 +3,8 @@
  * Primarily based on Noop, deadline, and SIO IO schedulers.
  *
  * Copyright (C) 2012 Brandon Berhent <bbedward@gmail.com>
- *
+ *           (C) 2014 LoungeKatt <twistedumbrella@gmail.com>
+ *				 2015 Fixes to stop crashing on 3.10 by Matthew Alex <matthewalex@outlook.com>
  * FCFS, dispatches are back-inserted, deadlines ensure fairness.
  * Should work best with devices where there is no travel delay.
  */
@@ -16,25 +17,16 @@
 
 enum zen_data_dir { ASYNC, SYNC };
 
-<<<<<<< HEAD
 static const int sync_expire  = HZ / 2;    /* max time before a sync is submitted. */
 static const int async_expire = 5 * HZ;    /* ditto for async, these limits are SOFT! */
-=======
-static const int sync_expire  = HZ / 4;    /* max time before a sync is submitted. */
-static const int async_expire = 2 * HZ;    /* ditto for async, these limits are SOFT! */
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
-static const int fifo_batch = 1;
+static const int fifo_batch = 16;
 
 struct zen_data {
 	/* Runtime Data */
 	/* Requests are only present on fifo_list */
 	struct list_head fifo_list[2];
 
-<<<<<<< HEAD
 	unsigned int batching;		/* number of sequential requests made */
-=======
-        unsigned int batching;          /* number of sequential requests made */
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
 
 	/* tunables */
 	int fifo_expire[2];
@@ -49,28 +41,17 @@ zen_get_data(struct request_queue *q) {
 static void zen_dispatch(struct zen_data *, struct request *);
 
 static void
-<<<<<<< HEAD
 zen_merged_requests(struct request_queue *q, struct request *req,
-=======
-zen_merged_requests(struct request_queue *q, struct request *rq,
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
                     struct request *next)
 {
 	/*
 	 * if next expires before rq, assign its expire time to arq
 	 * and move into next position (next will be deleted) in fifo
 	 */
-<<<<<<< HEAD
 	if (!list_empty(&req->queuelist) && !list_empty(&next->queuelist)) {
 		if (time_before(rq_fifo_time(next), rq_fifo_time(req))) {
 			list_move(&req->queuelist, &next->queuelist);
 			rq_set_fifo_time(req, rq_fifo_time(next));
-=======
-	if (!list_empty(&rq->queuelist) && !list_empty(&next->queuelist)) {
-		if (time_before(rq_fifo_time(next), rq_fifo_time(rq))) {
-			list_move(&rq->queuelist, &next->queuelist);
-			rq_set_fifo_time(rq, rq_fifo_time(next));
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
 		}
 	}
 
@@ -81,19 +62,11 @@ zen_merged_requests(struct request_queue *q, struct request *rq,
 static void zen_add_request(struct request_queue *q, struct request *rq)
 {
 	struct zen_data *zdata = zen_get_data(q);
-<<<<<<< HEAD
 	const int sync = rq_is_sync(rq);
 
 	if (zdata->fifo_expire[sync]) {
 		rq_set_fifo_time(rq, jiffies + zdata->fifo_expire[sync]);
 		list_add_tail(&rq->queuelist, &zdata->fifo_list[sync]);
-=======
-	const int dir = rq_data_dir(rq);
-
-	if (zdata->fifo_expire[dir]) {
-		rq_set_fifo_time(rq, jiffies + zdata->fifo_expire[dir]);
-		list_add_tail(&rq->queuelist, &zdata->fifo_list[dir]);
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
 	}
 }
 
@@ -119,11 +92,7 @@ zen_expired_request(struct zen_data *zdata, int ddir)
                 return NULL;
 
         rq = rq_entry_fifo(zdata->fifo_list[ddir].next);
-<<<<<<< HEAD
         if (time_after_eq(jiffies, rq_fifo_time(rq)))
-=======
-        if (time_after(jiffies, rq_fifo_time(rq)))
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
                 return rq;
 
         return NULL;
@@ -188,19 +157,33 @@ static int zen_dispatch_requests(struct request_queue *q, int force)
 	return 1;
 }
 
-static void *zen_init_queue(struct request_queue *q)
+static int zen_init_queue(struct request_queue *q, struct elevator_type *e)
 {
 	struct zen_data *zdata;
+    struct elevator_queue *eq;
+    
+    eq = elevator_alloc(q, e);
+    if (!eq)
+        return -ENOMEM;
 
 	zdata = kmalloc_node(sizeof(*zdata), GFP_KERNEL, q->node);
-	if (!zdata)
-		return NULL;
+    if (!zdata) {
+        kobject_put(&eq->kobj);
+        return -ENOMEM;
+    }
+    eq->elevator_data = zdata;
+	
+ 
+    spin_lock_irq(q->queue_lock);
+	q->elevator = eq;
+	spin_unlock_irq(q->queue_lock);
+	
 	INIT_LIST_HEAD(&zdata->fifo_list[SYNC]);
 	INIT_LIST_HEAD(&zdata->fifo_list[ASYNC]);
 	zdata->fifo_expire[SYNC] = sync_expire;
 	zdata->fifo_expire[ASYNC] = async_expire;
 	zdata->fifo_batch = fifo_batch;
-	return zdata;
+	return 0;
 }
 
 static void zen_exit_queue(struct elevator_queue *e)
@@ -289,13 +272,7 @@ static struct elevator_type iosched_zen = {
 
 static int __init zen_init(void)
 {
-<<<<<<< HEAD
 	return elv_register(&iosched_zen);
-=======
-	elv_register(&iosched_zen);
-
-	return 0;
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
 }
 
 static void __exit zen_exit(void)
@@ -310,8 +287,4 @@ module_exit(zen_exit);
 MODULE_AUTHOR("Brandon Berhent");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("Zen IO scheduler");
-<<<<<<< HEAD
 MODULE_VERSION("1.1");
-=======
-MODULE_VERSION("1.0");
->>>>>>> 8eee39d... Added FIFO, SIO, SIO+, VR, ZEN I/O Schedulers
