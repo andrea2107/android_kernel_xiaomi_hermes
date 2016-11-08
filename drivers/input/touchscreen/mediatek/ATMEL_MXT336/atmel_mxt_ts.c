@@ -114,9 +114,6 @@
 //#if defined(CONFIG_MXT_PLUGIN_SUPPORT)
 #include "plug.h"
 //#endif
-#ifdef CONFIG_WAKE_GESTURES
-#include <linux/wake_gestures.h>
-#endif
 
 /* Configuration file */
 #define MXT_CFG_MAGIC		"OBP_RAW V1"
@@ -221,9 +218,6 @@ struct t7_config {
 
 #define MXT_POWER_CFG_RUN		0
 #define MXT_POWER_CFG_DEEPSLEEP		1
-#ifdef CONFIG_WAKE_GESTURES
-#define MXT_POWER_CFG_WAKE_GESTURES	2
-#endif
 
 /* MXT_TOUCH_MULTI_T9 field */
 #define MXT_T9_ORIENT		9
@@ -549,14 +543,6 @@ struct mxt_data {
 	struct kobject *properties_kobj;
 #endif
 };
-
-#ifdef CONFIG_WAKE_GESTURES
-static struct mxt_data *gl_data;
-bool scr_suspended(void)
-{
-  	return gl_data->suspended;
-}
-#endif
 
 #if defined(CONFIG_FB_PM)
 static int fb_notifier_callback(struct notifier_block *self,
@@ -1892,10 +1878,6 @@ static void mxt_proc_t9_message(struct mxt_data *data, u8 *message)
 		} else {
 			tool = MT_TOOL_FINGER;
 		}
-#ifdef CONFIG_WAKE_GESTURES
-        if (data->suspended)
-            x += 5000;
-#endif
 
 		/* Touch active */
 		input_mt_report_slot_state(input_dev, tool, 1);
@@ -2082,10 +2064,7 @@ static void mxt_proc_t15_messages(struct mxt_data *data, u8 *msg)
 	
 	if (!data->enable_reporting)
 		return;
-#ifdef CONFIG_WAKE_GESTURES
-	if (data->suspended)
-		return;
-#endif
+
 	if (!data->pdata->keymap || !data->pdata->num_keys)
 		return;
 
@@ -3487,15 +3466,9 @@ static int mxt_set_t7_power_cfg(struct mxt_data *data, u8 sleep)
 	int error;
 	struct t7_config *new_config;
 	struct t7_config deepsleep = { .active = 0, .idle = 0 };
-#ifdef CONFIG_WAKE_GESTURES
-  	struct t7_config wake_gestures = { .active = 255, .idle = 255 };
-#endif
+
 	if (sleep == MXT_POWER_CFG_DEEPSLEEP)
 		new_config = &deepsleep;
-#ifdef CONFIG_WAKE_GESTURES
-  	else if (sleep == MXT_POWER_CFG_WAKE_GESTURES)
-  		new_config = &wake_gestures;
-#endif
 	else
 		new_config = &data->t7_cfg;
 
@@ -5312,19 +5285,6 @@ static void mxt_start(struct mxt_data *data, bool resume)
 		return;
 	
 	dev_info(dev, "mxt_start\n");
-#ifdef CONFIG_WAKE_GESTURES
-  	if (s2w_switch || dt2w_switch)
-  		board_disable_irq_wake(data->pdata, data->irq);
-  
-  	if (dt2w_switch_changed) {
-  		dt2w_switch = dt2w_switch_temp;
-  		dt2w_switch_changed = false;
-  	}
-  	if (s2w_switch_changed) {
-  		s2w_switch = s2w_switch_temp;
-  		s2w_switch_changed = false;
-  	}
-#endif
 
 	if (data->use_regulator) {
 		mxt_regulator_enable(data);
@@ -5381,33 +5341,16 @@ static void mxt_stop(struct mxt_data *data,bool suspend)
 		return;
 
 	dev_info(dev, "mxt_stop\n");
-	
+
 	if(atomic_read(&data->depth) > 0) {
-#ifdef CONFIG_WAKE_GESTURES
-  		if (!s2w_switch && !dt2w_switch) {
-  			board_disable_irq(data->pdata, data->irq);
-  			atomic_dec(&data->depth);
-  		}
-#else
 		board_disable_irq(data->pdata,data->irq);
 		atomic_dec(&data->depth);
-#endif
 	}
-#ifdef CONFIG_WAKE_GESTURES
-  	if (!s2w_switch && !dt2w_switch)
-  		data->enable_reporting = false;
-#else
 	data->enable_reporting = false;
-#endif
+
 	if (data->use_regulator)
 		mxt_regulator_disable(data);
 	else{
-#ifdef CONFIG_WAKE_GESTURES
-  		if (s2w_switch || dt2w_switch) {
-  			board_enable_irq_wake(data->pdata, data->irq);
-  			mxt_set_t7_power_cfg(data, MXT_POWER_CFG_WAKE_GESTURES);
-  		} else
-#endif
 		mxt_set_t7_power_cfg(data, MXT_POWER_CFG_DEEPSLEEP);
 #if defined(CONFIG_MXT_PLUGIN_SUPPORT)
 		mxt_plugin_stop(&data->plug,suspend);
@@ -6066,9 +6009,6 @@ LCSH_DEBUG("*****sunwf111111 func = %s line = %d ******\n",__func__,__LINE__);
 #endif
 
 	dev_info(&client->dev, "Mxt probe finished\n");
-#ifdef CONFIG_WAKE_GESTURES
-  	gl_data = data;
-#endif
 
 	return 0;
 
