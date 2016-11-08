@@ -34,10 +34,6 @@
  * It helps to keep variable names smaller, simpler
  */
 
-<<<<<<< HEAD
-/* Tuning Interface */
-#define FREQ_RESPONSIVENESS		819000
-=======
 /* Tuning Interface */ 
 /*superdragonpt : Tune in for Jiayu S3*/
 #ifdef ARCH_MT6752
@@ -45,7 +41,6 @@
 #else
 #define FREQ_RESPONSIVENESS		1134000
 #endif
->>>>>>> 80a158a... add wheatley and alucard
 
 #define CPUS_DOWN_RATE			2
 #define CPUS_UP_RATE			1
