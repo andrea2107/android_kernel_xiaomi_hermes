@@ -2,6 +2,7 @@
 # Automatically generated file; DO NOT EDIT.
 # Linux/arm64 3.10.72 Kernel Configuration
 #
+CONFIG_LOCALVERSION="-revolutiontek"
 CONFIG_ARM64=y
 CONFIG_ARM_HAS_SG_CHAIN=y
 CONFIG_64BIT=y
