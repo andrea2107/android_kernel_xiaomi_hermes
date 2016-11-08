@@ -4,6 +4,8 @@
  *
  * Copyright (c) 2013, Dennis Rassmann <showp1984@gmail.com>
  * Copyright (c) 2015, Vineeth Raj <contact.twn@openmailbox.org>
+ * Copyright (c) 2015, Swapnil Solanki <swapnil133609@gmail.com>
+ * Copyright (c) 2015, Levin Calado <levincalado@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +51,10 @@
 /* if Sweep2Wake is compiled it will already have taken care of this */
 #ifdef CONFIG_TOUCHSCREEN_SWEEP2WAKE
 #define ANDROID_TOUCH_DECLARED
+#endif
+
+#ifdef CONFIG_POCKETMOD
+#include <linux/pocket_mod.h>
 #endif
 
 /* Version, author, desc, etc */
@@ -191,10 +197,15 @@ static void detect_doubletap2wake(int x, int y, bool st)
 }
 
 static void dt2w_input_callback(struct work_struct *unused) {
-//avoid button presses being recognized as touches
-	if (touch_y < 1920) {
+	
+	#ifdef CONFIG_POCKETMOD
+	if (device_is_pocketed()){
+		return;
+	}
+	else
+	#endif
 	detect_doubletap2wake(touch_x, touch_y, true);
-}
+
 	return;
 }
 
@@ -383,7 +394,7 @@ static ssize_t dt2w_doubletap2wake_dump(struct device *dev,
 	return count;
 }
 
-static DEVICE_ATTR(doubletap2wake, (S_IWUSR|S_IRUGO),
+static DEVICE_ATTR(doubletap2wake, (S_IWUSR|S_IRUGO|S_IROTH|S_IWOTH),
 	dt2w_doubletap2wake_show, dt2w_doubletap2wake_dump);
 
 static ssize_t dt2w_version_show(struct device *dev,
