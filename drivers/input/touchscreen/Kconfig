@@ -1395,12 +1395,6 @@ config TOUCHSCREEN_SYNAPTICS
 	  To compile this driver as a module, choose M here: the
 	  module will be called Synaptics.
 
-config TOUCHSCREEN_S3528
-	tristate "Synaptics S3528 touchscreen"
-	depends on I2C
-	help
-	  This enables support for Synaptics S3528 over I2C based touchscreens.
-
 config TOUCHSCREEN_SWEEP2WAKE
 	tristate "Sweep2Wake for touchscreens"
 	select TOUCHSCREEN_PREVENT_SLEEP
@@ -1416,6 +1410,7 @@ config TOUCHSCREEN_PREVENT_SLEEP
 	default n
 	help
 	  This disables the sleep function of modified touchscreen drivers.
-
-
+	  
 endif
+
+
