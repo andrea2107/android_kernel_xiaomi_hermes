@@ -902,6 +902,12 @@ static ssize_t fts_fwupdate_store(struct device *dev,
 	return count;
 }
 
+#ifdef CONFIG_WAKE_GESTURES
+  bool scr_suspended_ft(void) {
+  	return ft5x06_ts->suspended;
+}
+#endif
+
 static ssize_t fts_fwupgradeapp_show(struct device *dev,
 					struct device_attribute *attr,
 					char *buf)
