@@ -1411,7 +1411,6 @@ config TOUCHSCREEN_PREVENT_SLEEP
 	help
 	  This disables the sleep function of modified touchscreen drivers.
 	  
-endif
 
 
 config WAKE_GESTURES
