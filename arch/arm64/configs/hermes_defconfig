@@ -3049,3 +3049,5 @@ CONFIG_ARCH_HAS_ATOMIC64_DEC_IF_POSITIVE=y
 # CONFIG_AVERAGE is not set
 # CONFIG_CORDIC is not set
 # CONFIG_DDR is not set
+# flar2's ElementalX Wake Gesture
+CONFIG_WAKE_GESTURES=y
