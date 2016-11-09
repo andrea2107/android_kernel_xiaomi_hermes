@@ -135,7 +135,7 @@
 #else
 #define LCSH_DEBUG(arg...)
 #endif
-#define TPD_DEVICE   "swf**"
+// #define TPD_DEVICE   "swf**" it's already defined in another file!
 /********************swf add for printk end*************************/
 #if defined(CONFIG_ESD_CHECK_A_REGISTER)
 static struct task_struct *esd_thread = NULL;  //swf55
