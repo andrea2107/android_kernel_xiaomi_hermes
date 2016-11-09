@@ -1414,10 +1414,8 @@ config TOUCHSCREEN_PREVENT_SLEEP
 endif
 
 
-<<<<<<< HEAD
-=======
 config WAKE_GESTURES
 	bool "wake gestures"
 
 endif
->>>>>>> parent of 2b9b34d... Revert "Add flar2's ElementalX Wake Gesture"
+
