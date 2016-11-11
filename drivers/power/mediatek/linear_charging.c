@@ -805,13 +805,25 @@ void select_charging_curret(void)
 			}
 #else
 			{
+#ifdef CONFIG_THUNDERCHARGE_CONTROL
+  		g_temp_CC_value_linear = custom_usb_current;
+#else
 				g_temp_CC_value = USB_CHARGER_CURRENT;
+#endif
 			}
 #endif
 		} else if (BMT_status.charger_type == NONSTANDARD_CHARGER) {
+#ifdef CONFIG_THUNDERCHARGE_CONTROL
+  		g_temp_CC_value_linear = custom_ac_current;
+#else
 			g_temp_CC_value = NON_STD_AC_CHARGER_CURRENT;
+#endif
 		} else if (BMT_status.charger_type == STANDARD_CHARGER) {
+#ifdef CONFIG_THUNDERCHARGE_CONTROL
+  		g_temp_CC_value_linear = custom_ac_current;
+#else
 			g_temp_CC_value = AC_CHARGER_CURRENT;
+#endif
 #if defined(CONFIG_MTK_PUMP_EXPRESS_SUPPORT)
 			if(is_ta_connect == KAL_TRUE && ta_vchr_tuning == KAL_TRUE)
 				g_temp_CC_value = CHARGE_CURRENT_1500_00_MA;
