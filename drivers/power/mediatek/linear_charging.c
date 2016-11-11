@@ -805,7 +805,6 @@ void select_charging_curret(void)
 			}
 #else
 			{
-<<<<<<< HEAD
 				g_temp_CC_value = USB_CHARGER_CURRENT;
 			}
 #endif
@@ -836,29 +835,7 @@ void select_charging_curret(void)
 #else
 			g_temp_CC_value = CHARGING_HOST_CHARGER_CURRENT;
 #endif
-=======
-#ifdef CONFIG_THUNDERCHARGE_CONTROL
-				g_temp_CC_value_linear = custom_usb_current;
-#else
-				g_temp_CC_value_linear = cur_usb_charger;
-#endif
-			}
-#endif
-		} else if (BMT_status.charger_type == NONSTANDARD_CHARGER) {
-#ifdef CONFIG_THUNDERCHARGE_CONTROL
-			g_temp_CC_value_linear = custom_ac_current;
-#else
-			g_temp_CC_value_linear = cur_no_std_charger;
-#endif
-		} else if (BMT_status.charger_type == STANDARD_CHARGER) {
-#ifdef CONFIG_THUNDERCHARGE_CONTROL
-			g_temp_CC_value_linear = custom_ac_current;
-#else
-			g_temp_CC_value_linear = cur_ac_charger;
-#endif
-		} else if (BMT_status.charger_type == CHARGING_HOST) {
-			g_temp_CC_value_linear = cur_charging_host;
->>>>>>> b446e2a... thundercharge 2.x: initial GPL release for mediatek linear charging
+
 		} else if (BMT_status.charger_type == APPLE_2_1A_CHARGER) {
 			g_temp_CC_value = APPLE_2_1A_CHARGER_CURRENT;
 		} else if (BMT_status.charger_type == APPLE_1_0A_CHARGER) {
