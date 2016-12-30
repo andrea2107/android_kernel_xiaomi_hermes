@@ -41,7 +41,7 @@ script:
 # "6" is "Build Kernel"
 # "7" is "Zip the kernel and Modules"
 # "q" is to Exit of Script
-- nbuild="67q"
+- nbuild="6q"
 
 # Main variables
 # Call of 'build.sh'
