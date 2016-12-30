@@ -2774,7 +2774,7 @@ int akm09911_linear_accelration_operate(void* self, uint32_t command, void* buff
 static int akm09911_suspend(struct i2c_client *client, pm_message_t msg) 
 {
 	int err;
-	struct akm09911_i2c_data *obj = i2c_get_clientdata(client)
+	struct akm09911_i2c_data *obj = i2c_get_clientdata(client);
 	    
 
 	if(msg.event == PM_EVENT_SUSPEND)
@@ -2787,7 +2787,7 @@ static int akm09911_suspend(struct i2c_client *client, pm_message_t msg)
 static int akm09911_resume(struct i2c_client *client)
 {
 	int err;
-	struct akm09911_i2c_data *obj = i2c_get_clientdata(client)
+	struct akm09911_i2c_data *obj = i2c_get_clientdata(client);
 
 
 	akm09911_power(obj->hw, 1);
