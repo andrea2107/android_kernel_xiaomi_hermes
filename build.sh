@@ -295,7 +295,7 @@ then
 	builder=Caio99BR
 	custom_kernel_branch=KK-Stock
 	prebuilt_ramdisk=true
-	ARCH=arm
+	ARCH=arm64
 
 	while true
 	do
