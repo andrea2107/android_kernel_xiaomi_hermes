@@ -15,7 +15,6 @@ before_install:
   - sudo apt-get update -qq
    
   - git clone https://andrea2107@bitbucket.org/UBERTC/aarch64-linux-android-4.9-kernel.git
-  - export PATH=$PATH:$PWD/aarch64-linux-android-4.9-kernel/bin/
   - sudo apt-get install bc
 
 
@@ -30,7 +29,7 @@ script:
   - export TOP=$(pwd)
   - export ARCH=arm64
   - export CONFIG_NO_ERROR_ON_MISMATCH=y
-  - export CROSS_COMPILE=aarch64-linux-android- 
+  - export CROSS_COMPILE=aarch64-linux-android-4.9-kernel/bin/aarch64-linux-android- 
 
   - mkdir -p $TOP/KERNEL_OBJ
   - make O=$TOP/KERNEL_OBJ ARCH=arm64 MTK_TARGET_PROJECT=hermes TARGET_BUILD_VARIANT=user CROSS_COMPILE=$TOOLCHAIN ROOTDIR=$TOP hermes_defconfig
