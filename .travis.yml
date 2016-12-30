@@ -51,7 +51,7 @@ script:
 # - export zipfile#="${zipfile}"
 
 # TravisCI Custom Patches
-- patch -p1 < zip-creator/travis-ci/0001-TravisCI-Custom-Patches.patch
+# - patch -p1 < zip-creator/travis-ci/0001-TravisCI-Custom-Patches.patch
 
 - export ndevicechoice="1"
 - source build.sh <<< "${ndevice}${ndevicechoice}${ntoolchain}${nbuild}"
