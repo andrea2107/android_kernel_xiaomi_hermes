@@ -291,10 +291,6 @@ then
 	color_yellow=$(tput bold)$(tput setaf 3)
 	color_blue=$(tput bold)$(tput setaf 4)
 	# Main Variables
-	custom_kernel=FalconSSKernel
-	builder=Caio99BR
-	custom_kernel_branch=KK-Stock
-	prebuilt_ramdisk=true
 	ARCH=arm64
 
 	while true
