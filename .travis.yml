@@ -57,4 +57,5 @@ script:
 - source build.sh <<< "${ndevice}${ndevicechoice}${ntoolchain}${nbuild}"
 deploy:
   skip_cleanup: true
+  all_branches: true
 
